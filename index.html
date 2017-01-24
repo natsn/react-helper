@@ -1,0 +1,235 @@
+<html lang=en-US>
+    <head>
+        <title>React Helper</title>
+        <meta name=author content="Yves Gurcan">
+        <meta name=keywords content="HTML, JavasScript, React, JSX, Babel, Webpack, npm, components, web, production, code">
+        <meta name=description content="This page contains various content to help you build your React projects.">
+        <meta name=viewport content="width=device-width, initial-scale=1">
+        <meta charset=utf-8>
+        <!-- Boostrap and jQuery dependency -->
+        <link rel=stylesheet href=https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css>
+        <script src=https://code.jquery.com/jquery-3.1.1.min.js></script>
+        <script src=https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js></script>
+        <!-- minimal custom styling -->
+        <style>* {font-size: 1.8rem} h1 {font-size: 5.5rem} h2 {font-size: 2.75rem} h3 {font-size: 2rem; color: grey} .lead {font-size: 2rem} address {text-align: right; margin-right: 10%; margin-top: -1.2rem;}</style>
+    </head>
+    <body>
+    
+        <div class=container>
+            <div class=row>
+                <div class=col-sm-12>
+                    <h1>React Helper</h1>
+                    <!-- intro -->
+                    <div>
+                        <p class=lead>Welcome to my helper page for React projects.</p>
+                        <p class=lead>The content is organized in sections that cover different aspects of the framework. More specifically, the first section is about how to set up a project in React from scratch. Please note that some content originates from other webpages and was adapted here. I hope that you will find the page useful. I maintain an updated version of the React Helper on my personal website at <a class=lead href=http://yvesgurcan.com/react>yvesgurcan.com/react</a>.</p>
+                        <address class=lead>&mdash; Yves Gurcan</address>
+                    </div>
+                    <!-- start a project -->
+                    <div>
+                        <h2>Start a React Project</h2>
+                        <p>To start a project in React, you need to do some setup. <code>npm</code> is the tool you want to use (make sure it is installed on your machine).</p>
+                        <p>Open a terminal and <code>cd</code> to the folder of your project (use <code>mkdir</code> if necessary). Enter the three following commands:</p>
+<pre>
+npm init;
+npm install --save react react-dom;
+npm install --save-dev html-webpack-plugin webpack webpack-dev-server babel-core babel-loader babel-preset-react;
+</pre>
+                        <p>The first command creates the appropriate <code>package.json</code> file. You will be prompted input to describe your project, but you can just leave the fields blank for now, since you're going to copy/paste your own template later.</p>
+
+                        <p>The two other commands install the latest version of the dependencies you are going to use for your React project (i.e., <b>react</b>, <b>webpack</b>, and <b>babel</b>) in a <code>node_modules</code> folder. These changes will be automatically reflected in <code>package.json</code>. Executing these commands might take a little while, depending on your internet connection.</p>
+                        
+                        <p>Create a <code>.babelrc</code> file at the root of your project with the following code in it:</p>
+<pre>
+// .babelrc file
+{
+  "presets": [
+    "react"
+  ]
+}
+</pre>
+                        <p>Now, you need to create a <code>webpack.config.js</code> file at the root of your project folder to configure Webpack.</p>
+<pre>
+// webpack.config.js
+var HtmlWebpackPlugin = require('html-webpack-plugin')
+var HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
+  template: __dirname + '/app/index.html',
+  filename: 'index.html',
+  inject: 'body'
+});
+
+module.exports = {
+  entry: [
+    './app/index.js'
+  ],
+  output: {
+    path: __dirname + '/dist',
+    filename: "index_bundle.js"
+  },
+  module: {
+    loaders: [
+      {test: /\.js$/, exclude: /node_modules/, loader: "babel-loader"}
+    ]
+  },
+  plugins: [HTMLWebpackPluginConfig]
+};
+
+</pre>
+                        <p><b>At this point, your project is up and running.</b></p>
+                        <p>This configuration of Webpack means that the source code of your project is contained in two files in the <code>app</code> folder: <code>index.html</code> and <code>index.js</code>. This is where you will write your code (aka <i>source code</i>). Make sure that you create these files.</p>
+                        <p>Once you started writing your project, <b>the source code needs to be compiled</b> using the <code>npm</code> production command:</p>
+<pre>
+npm run production
+</pre>
+                        <p>Given the Webpack configuration, this command outputs the compiled code to the <code>dist</code> folder in two files: <code>index.html</code> and <code>index_bundle.js</code>.</p>
+                        <p><b>The content of the <code>dist</code> folder can be copy/pasted anywhere and will work on its own.</b> Feel free to modify the Webpack configuration file to suit your project needs (output in a different directory, load other modules, change file input, etc.).</p>
+                        <p>You can then (and not before) modify <code>package.json</code> with the following template:</p>
+<pre>
+// package.json file
+{
+  "name": "",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "production": "webpack -p"
+  },
+  "author": "Yves Gurcan &lt;gurcan.yves@gmail.com&gt; (http://yvesgurcan.com)",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/gerkhin/"
+  },
+}
+</pre>
+                        <p>Be careful when you modify <code>package.json</code>: keep the dependency sections (not visible here, since the output will depend on the version of the dependencies, which change over time) in the file to make it easier for other people to install your project.</p>
+                        <p>To update the app, <b>you have to run the following command every time you want to reflect any change on the code</b> (in short: this command rebuilds the output from the source code):</p>
+<pre>
+npm run production
+</pre>
+                        <p>That's it!</p>
+                    </div>
+
+                    <!-- components -->
+                    <div>
+                        <h2>React Elements and React Components</h2>
+                        <p>Simply put, a React element describes what you want to see on the screen. Not so simply put, <b>a React element is an object representation of a DOM node</b>. It’s important to note that a React element isn’t actually the thing you’ll see on your screen, instead, it’s just an object representation of it. In order to create our object representation of a DOM node (aka React element), we can use React’s <code>createElement</code> method.</p>
+<pre>
+// the createElement method
+const element = React.createElement(
+    'div',
+    {id: 'login-btn'},
+    'Login'
+)
+</pre>
+                        <p><code>createElement</code> takes in <b>three arguments</b>. The first is a tag name string (<code>div</code>, <code>span</code>, etc), the second is any attributes you want the element to have, the third is contents or the children of the element, in this case the text <code>Login</code>.</p>
+                        <p>The <code>createElement</code> invocation above is going to return an object with this shape</p>
+<pre>
+// the object returned by the createElement method
+{
+    type: 'div',
+    props: {
+        children: 'Login',
+        id: 'login-btn'
+    }
+}
+</pre>
+                        <p>and when it’s rendered to the DOM (using <code>ReactDOM.render</code>), we’ll have a new DOM node that looks like this</p>
+<pre>
+&lt;!-- the HTML representation of the element --&gt;
+&lt;div id='login-btn'&gt;Login&lt;/div&gt;
+</pre>
+                        <p>What’s interesting about learning React is that typically the first thing you’re taught is components. <b>A component is a function or a class which optionally accepts input and returns a React element</b>.</p>
+<pre>
+// a React component
+function Button ({ onLogin }) {
+    return React.createElement(
+        'div',
+        {id: 'login-btn', onClick: onLogin},
+        'Login'
+    )
+}
+</pre>
+                        <p>Above, we have a <code>Button</code> component which accepts an <code>onLogin</code> input and returns a React element. One thing to note is that <b>our Button component receives an <code>onLogin</code> method as its prop. To pass that along to our object representation of the DOM, we pass it along as the second argument to <code>createElement</code></b>, just as we did our <code>id</code> attribute.</p>
+                        <p><b>You can also pass in other React components</b> to the first argument of <code>createElement</code>.</p>
+<pre>
+// an element can reference another element
+const element = React.createElement(
+    User,
+    {name: 'Tyler McGinnis'},
+    null
+)
+</pre>
+                    </div>
+
+                    <!-- returns -->
+                    <div>
+                        <h2>Returns</h2>
+                        <h3>A function returns a view</h3>
+                            <p>One of the best parts of React is that you can use the same intuition that you have about JavaScript functions for when and where you should create React components. However, instead of your function taking in some arguments and returning a value, your function is going to take in some arguments and return an object representation of your UI. This idea can be summed up in the following formula, fn(d) = V. <b>A Function takes in some Data and returns a View</b>. This is a beautiful way to think about developing user interfaces because now your UI is just composed of different function invocations. This is how you’re already used to building applications and now you can take advantage of all of the benefits of function composition when building UIs.</p>
+                        <h3>Components don't have to return an HTML descriptor</h3>
+                            <p>What’s great about React is you don’t <i>have</i> to return typical “views” from your components. <b>As long as what eventually gets returned is a React element, <code>null</code>, or <code>false</code>, you’re good.</b></p>
+                            <p>You can return other components</p>
+<pre>
+// returns another component
+render () {
+    return &lt;MyOtherComponent/&gt;
+}
+</pre>
+                            <p>You can return function invocations</p>
+<pre>
+// returns a state
+render () {
+    return this.props.children(this.someImportantState)
+}
+</pre>
+                            <p>Or, you can return nothing</p>
+<pre>
+// returns null
+render () {
+    return null
+}
+</pre>
+                    </div>
+
+                    <!-- states -->
+                    <div>
+                    <h2>States</h2>
+                        <p>A component based architecture naturally makes sharing state more difficult. If two components rely on the same state, where should that state live? This was such a popular question that it spurred an entire ecosystem of solutions which eventually ended with Redux. Redux’s solution is to put that shared state in another location called a “store”. React’s solution is to find the nearest parent of both of those components and have that  <b>parent manage the shared state, passing it down to the child components as needed</b>. There are pros and cons to both approaches but it’s important to be aware that both solutions exist.</p>
+                    </div>
+
+                    <!-- keys -->
+                    <div>
+                        <h2>Keys</h2>
+                        <p>When you render a list of items, React always stores some info about each item in the list. <b>If you render a component that has state, that state needs to be stored</b> – and regardless of how you implement your components, React stores a reference to the backing native views.</p>
+                        <p>When you update that list, React needs to determine what has changed. You could've added, removed, rearranged, or updated items in the list.</p>
+                        <p>Imagine transitioning from</p>
+<pre>
+&lt;!-- initial list --&gt; 
+&lt;li&gt;Alexa: 7 tasks left&lt;/li&gt;
+&lt;li&gt;Ben: 5 tasks left&lt;/li&gt;
+</pre>
+                        <p>to</p>
+<pre>
+&lt;!-- altered list --&gt; 
+&lt;li&gt;Ben: 9 tasks left&lt;/li&gt;
+&lt;li&gt;Claudia: 8 tasks left&lt;/li&gt;
+&lt;li&gt;Alexa: 5 tasks left&lt;/li&gt;
+</pre>
+                        <p>React is just a computer program and doesn't know what you intended it to do. As a result, <b>React asks you to specify a key property on each element in a list, a string to differentiate each component from its siblings</b>. In this case, <code>alexa</code>, <code>ben</code>, <code>claudia</code> might be sensible keys; if the items correspond to objects in a database, the database ID is usually a good choice:</p>
+<pre>
+// how to specify a key on an element
+&lt;li key={user.id}>{user.name}: {user.taskCount} tasks left</li>
+</pre>
+                        <p><code>key</code> is a special property that's reserved by React. When an element is created, React pulls off the key property and stores the key directly on the returned element. Even though it may look like it is part of props, <b>it cannot be referenced with <code>this.props.key</code>.</b> React uses the key automatically while deciding which children to update; there is no way for a component to inquire about its own key.</p>
+                        <p>When a list is rerendered, React takes each element in the new version and looks for one with a matching key in the previous list. When a key is added to the set, a component is created; when a key is removed, a component is destroyed. Keys tell React about the identity of each component, so that it can maintain the state across rerenders. If you change the key of a component, it will be completely destroyed and recreated with a new state.</p>
+                        <p>If you don't specify any key, React will warn you and fall back to using the array index as a key – which is not the correct choice if you ever reorder elements in the list or add/remove items anywhere but the bottom of the list. Explicitly passing <code>key={i}</code> silences the warning but has the same problem so isn't recommended in most cases.</p>
+                        <p><b>Component keys don't need to be globally unique, only unique relative to the immediate siblings.</b></p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

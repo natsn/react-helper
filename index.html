@@ -161,6 +161,47 @@ const element = React.createElement(
     null
 )
 </pre>
+                        <h3>How to break down components</h3>
+                        <p>How do you know what should be its own component? Just use the same techniques for deciding if you should create a new function or object. One such technique is the single responsibility principle, that is, <b>a component should ideally only do one thing</b>. If it ends up growing, it should be decomposed into smaller subcomponents.</p>
+                    </div>
+
+                    <!-- states vs props -->
+                    <div>
+                        <h2>State vs Props</h2>
+                        <p>There are two types of "model" data in React: props and state. <b>To build a static version of your app that renders your data model, you'll want to build components that reuse other components and pass data using props.</b> props are a way of passing data from parent to child. If you're familiar with the concept of state, don't use state at all to build this static version. <b>State is reserved only for interactivity</b>, that is, data that changes over time. Since this is a static version of the app, you don't need it.</p>
+
+                    </div>
+
+                    <!-- state -->
+                    <div>
+                    <h2>State</h2>
+                        <h3>What is a state?</h3>
+                            <p>Say that you want to build a ticking clock app. The <code>Clock</code> component will set up its own timer and update itself every second. To implement this, we need to add "state" to the component. <b>State is similar to props, but it is private and fully controlled by the component.</b> Components defined as classes have some additional features. Local state is exactly that: a feature available only to classes.</p>
+                            <p>You can convert a functional component like <code>Clock</code> to a class in five steps:</p>
+                                <ol>
+                                    <li>Create an ES6 class with the same name that extends <code>React.Component</code>.</li>
+                                    <li>Add a single empty method to it called <code>render()</code>.</li>
+                                    <li>Move the body of the function into the <code>render()</code> method.</li>
+                                    <li>Replace <code>props</code> with <code>this.props</code> in the <code>render()</code> body.</li>
+                                    <li>Delete the remaining empty function declaration.</li>
+                                </ol>
+<pre>
+// a component as a class rather than a function
+class Clock extends React.Component {
+  render() {
+    return (
+      &lt;div&gt;
+        &lt;h1>Hello, world!&lt;/h1&gt;
+        &lt;h2&gt;It is {this.props.date.toLocaleTimeString()}.&lt;/h2&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+</pre>
+                                <p><b><code>Clock</code> is now defined as a class rather than a function.</b> This lets us use additional features such as local state and lifecycle hooks.</p>
+                                <a href=https://facebook.github.io/react/docs/state-and-lifecycle.html>More here.</a>
+                        <h3>Parents manage shared states of their children</h3>
+                            <p>A component based architecture naturally makes sharing state more difficult. If two components rely on the same state, where should that state live? This was such a popular question that it spurred an entire ecosystem of solutions which eventually ended with Redux. Redux’s solution is to put that shared state in another location called a “store”. React’s solution is to find the nearest parent of both of those components and have that  <b>parent manage the shared state, passing it down to the child components as needed</b>. There are pros and cons to both approaches but it’s important to be aware that both solutions exist.</p>
                     </div>
 
                     <!-- returns -->
@@ -191,12 +232,6 @@ render () {
     return null
 }
 </pre>
-                    </div>
-
-                    <!-- states -->
-                    <div>
-                    <h2>States</h2>
-                        <p>A component based architecture naturally makes sharing state more difficult. If two components rely on the same state, where should that state live? This was such a popular question that it spurred an entire ecosystem of solutions which eventually ended with Redux. Redux’s solution is to put that shared state in another location called a “store”. React’s solution is to find the nearest parent of both of those components and have that  <b>parent manage the shared state, passing it down to the child components as needed</b>. There are pros and cons to both approaches but it’s important to be aware that both solutions exist.</p>
                     </div>
 
                     <!-- keys -->

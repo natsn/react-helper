@@ -2,8 +2,7 @@
     <head>
         <title>React Helper</title>
         <link rel=canonical href=http://yvesgurcan.com/react/>
-        <meta name=author content="Yves Gurcan">
-        <meta name=author content="Yves Gurcan">
+        <meta name=author content="Yves Gurcan with the help of Nathan Pointer">
         <meta name=keywords content="HTML, JavasScript, React, Facebook, JSX, Babel, Webpack, npm, components, web, development, production, code">
         <meta name=description content="This page contains various content to help you build your React projects.">
         <meta name=viewport content="width=device-width, initial-scale=1">
@@ -251,40 +250,88 @@ const element = React.createElement(
                             <h2>State</h2>
                         </div>
                         <div id=state class=content>
-                            <div id=what-is-a-state class=title>
-                                <h3>What is a state?</h3>
+                            <div id=how-to-initialize-state class=title>
+                                <h3>How To Initialize State</h3>
                             </div>
-                            <div id=what-is-a-state class=content>
-                                <p>Say that you want to build a ticking clock app. The <code>Clock</code> component will set up its own timer and update itself every second. To implement this, we need to add "state" to the component. <b>State is similar to props, but it is private and fully controlled by the component.</b> Components defined as classes have some additional features. Local state is exactly that: a feature available only to classes.</p>
-                                <p>You can convert a functional component like <code>Clock</code> to a class in five steps:</p>
-                                    <ol>
-                                        <li>Create an ES6 class with the same name that extends <code>React.Component</code>.</li>
-                                        <li>Add a single empty method to it called <code>render()</code>.</li>
-                                        <li>Move the body of the function into the <code>render()</code> method.</li>
-                                        <li>Replace <code>props</code> with <code>this.props</code> in the <code>render()</code> body.</li>
-                                        <li>Delete the remaining empty function declaration.</li>
-                                    </ol>
+                            <div id=how-to-initialize-state class=content>
+                                <p>State are the properties of components that change. <b>When a state is changed, it triggers a re-render.</b></p>
+                                <p>If you use ES6, you initialize state in a component with <code>constructor(props)</code>:
 <pre>
-// a component as a class rather than a function
-class Clock extends React.Component {
-  render() {
-    return (
-      &lt;div&gt;
-        &lt;h1>Hello, world!&lt;/h1&gt;
-        &lt;h2&gt;It is {this.props.date.toLocaleTimeString()}.&lt;/h2&gt;
-      &lt;/div&gt;
-    );
-  }
+// Works with ES6 only
+class <i>MyComponent</i> extends React.Component {
+    <b>constructor(props) {
+        super(props)
+        this.state = { <i>myState</i>: "<i>value</i>"};
+    }</b>
+    render() {
+        return &lt;div&gt;{this.state.myState}&lt;/div&gt;
+    }
 }
 </pre>
-                                <p><b><code>Clock</code> is now defined as a class rather than a function.</b> This lets us use additional features such as local state and lifecycle hooks.</p>
-                                <a href=https://facebook.github.io/react/docs/state-and-lifecycle.html>More here.</a>
+                                <p>If you do not use ES6, then you need to use <code>getInitialState()</code>:</p>
+<pre>
+// Works with ES5 only
+var MyComponent = React.createClass({
+    <b>getInitialState() {
+        return { <i>myState</i>: "<i>value</i>" };
+    },</b>
+    render() {
+        return &lt;div&gt;{this.state.myState}&lt;/div&gt;
+    }
+})
+</pre> 
+                                <p></p>
                             </div>
-                            <div id=shared-state class=title>
-                                <h3>Parents manage shared states of their children</h3>
+                            <div id=passing-shared-state class=title>
+                                <h3>Passing Shared State To Sibling Children</h3>
                             </div>
-                            <div id=shared-state class=content>
-                                <p>A component based architecture naturally makes sharing state more difficult. If two components rely on the same state, where should that state live? This was such a popular question that it spurred an entire ecosystem of solutions which eventually ended with Redux. Redux’s solution is to put that shared state in another location called a “store”. React’s solution is to find the nearest parent of both of those components and have that  <b>parent manage the shared state, passing it down to the child components as needed</b>. There are pros and cons to both approaches but it’s important to be aware that both solutions exist.</p>
+                            <div id=passing-shared-state class=content>
+                                <p><b>If you have components that need to share a common state, they should be siblings. The state needs to live in the parent component</b> to re-render the children dynamically, based on the changes of state.</p>
+<pre>
+// This component is re-render every time incrementState is changed
+var Counter = React.createClass({
+    render() {
+        return (
+          &lt;div&gt;
+            &lt;p&gt;Counter: <b>{ this.props.counter }</b>&lt;/p&gt;
+          &lt;/div&gt;
+        )
+    }
+})
+
+// The button modifies the value of incrementState
+var IncrementButton = React.createClass({
+    render() {
+        return (
+          &lt;div&gt;
+            &lt;button <b>onClick={ this.props.incrementState }</b>&gt;Increment&lt;/button&gt;
+          &lt;/div&gt;
+        )
+    }
+})
+
+// The function that modifies incrementState actually lives in the parent component
+var MyComponent = React.createClass({
+    getInitialState() {
+        return { counter: 0};
+    },
+    <b>// This function is passed to the child as a prop so that the state can be modified from the child
+    incrementState() {
+        this.setState({ counter: this.state.counter + 1 })
+        console.log("New value: " + this.state.counter)
+    },</b>
+    render() {
+        return (
+          &lt;div&gt;
+            &lt;Counter <b>counter={ this.state.counter }</b>/&gt;
+            &lt;IncrementButton <b>incrementState={ this.incrementState }</b>/&gt;
+          &lt;/div&gt;
+        )
+    }
+})
+</pre>
+                                <p><b>You can not write functions that modify a state in the child component</b> because the state will be <code>undefined</code> in this scope. If you pass the state as a prop in a function declared in the child component, it will not trigger a re-render because the nature of the state has been changed to a property (not exactly sure if this is the actual reason, but I think that's what happens).</p>
+                                <p>If two components rely on the same state, React’s solution is to find the nearest parent of both of those components and have that <b>parent manage the shared state, passing it down to the child components as needed</b>. Redux’s solution is to put that shared state in another location called a “store”. There are pros and cons to both approaches but it’s important to be aware that both solutions exist.</p>
                             </div>
                         </div>
                     </div>
@@ -503,7 +550,7 @@ var Parent = React.createClass({
         /* jQuery */
             // debug
             var debug = false
-            var expand_section = ["destructuring-data"] // enter the sections that you want to keep expanded (section only, no subsections)
+            var expand_section = ["state"] // enter the sections that you want to keep expanded (section only, no subsections)
             // init
             $(document).ready(function(){
                 // welcome message
@@ -511,19 +558,27 @@ var Parent = React.createClass({
                 // debug status
                 console.log("Debug mode is " + debug + ".")
                 // collapses sections on ready
+                console.log("Sections that should not be collapsed: " + expand_section + ".")
                 $(".content").each(function(){
-                    // element is not flagged as to prevent collapsing
-                    if ($(this).attr('collapsed') != "false") {
+                    // element is not flagged as to prevent collapsing (or debug is true and expand_section var is not "all")
+                    if ($(this).attr('collapsed') != "false" || debug) {
                         // check for debug settings
-                        if (!debug || (debug && expand_section.indexOf($(this).parent().attr('id')) == -1)) {
-                            // collapse the element
-                            $(this).hide()
-                            var parent = ""
-                            if ($(this).parent().attr('id') != $(this).attr('id')) parent = " (child of #" + $(this).parent().attr('id') + ")"
-                            console.log("Collapsed #" + $(this).attr('id') + parent)
+                        if (!debug || (debug && (expand_section.indexOf("all") == -1))) {
+                            if (!debug || (debug && (expand_section.indexOf($(this).parent().attr('id')) == -1))) {
+                                // collapse the element
+                                $(this).hide()
+                                var parent = ""
+                                if ($(this).parent().attr('id') != $(this).attr('id')) parent = " (child of #" + $(this).parent().attr('id') + ")"
+                                console.log("Collapsed #" + $(this).attr('id') + parent)
+                            }
+                            // the element was not collapsed because of debug mode
+                            else console.log("Kept #" + $(this).attr('id') + " expanded (debug)")
                         }
-                        // the element was not collapsed because of debug mode
-                        else console.log("Kept #" + $(this).attr('id') + " expanded (debug)")
+                        else {
+                            console.log("All sections were kept expanded (debug).")
+                            // breaks the loop
+                            return false
+                        }
                     }
                     // special case: debug is true and element id is "intro""
                     else if (debug && $(this).attr('id') == "intro") {

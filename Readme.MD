@@ -1,1 +1,1 @@
-This micro-site contains various content to help you build your React projects.
+React Helper is a one-page website that contains information on how to use React for developers who have little experience with this JavaScript library. This utility was written by Yves Gurcan in plain HTML, CSS/Bootstrap, and with jQuery. Feel free to redistribute the content. The layout could be greatly improve and the content could be greatly expanded with more time and energy spent on this project :)

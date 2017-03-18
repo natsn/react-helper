@@ -12,7 +12,7 @@
         <script src=https://code.jquery.com/jquery-3.1.1.min.js></script>
         <script src=https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js></script>
         <!-- minimal custom styling -->
-        <style>body {padding-bottom: 5rem;} * {font-size: 1.8rem} h1 {font-size: 5.5rem} h2 {font-size: 2.75rem} h3 {font-size: 2rem; color: grey} .lead {font-size: 2rem} address {text-align: right; margin-right: 10%; margin-top: -1.2rem;} b,i {font-size: 100%} .wrapper{background: rgb(200,230,255); padding: 1rem; margin-bottom: 1rem;} .source{font-style: italic;} </style>
+        <style>body {padding-bottom: 5rem;} * {font-size: 1.8rem} h1 {font-size: 5.5rem} h2 {font-size: 2.75rem} h3 {font-size: 2rem; color: grey} .lead {font-size: 2rem} address {text-align: right; margin-right: 10%; margin-top: -1.2rem;} b,i {font-size: 100%} .wrapper{background: rgb(200,230,255); padding: 1rem; margin-bottom: 1rem;} .source{font-style: italic;} .section-reference {cursor: pointer;} #settings ul, #settings ul li {list-style: none; display: inline; padding-left: 0; cursor: pointer;} #settings ul li:not(:last-child):after{content:","}</style>
     </head>
     <body>
     
@@ -34,12 +34,20 @@
                             </div>
                         </div>
 
+                        <!-- settings -->
+                        <div id=settings>
+                            <ul>
+                                <li><a id=toggle-sections collapsed=true>Expand Sections</a></li>
+                                <li><a id=toggle-subsections collapsed=true>Expand Subsections</a></li>
+                            </ul>
+                        </div>
+
                         <!-- start a project that does not need to be re-compiled all the time -->
-<div id=start-a-project-no-compiling class=wrapper>
+                        <div id=start-a-project-no-compiling class=wrapper>
                             <div id=start-a-project-no-compiling class=title>
                                 <h2>Start a React Project Without Re-compiling Manually</h2>
                             </div>
-                            <div id=start-a-project-no-compiling class=content>
+                            <div id=start-a-project-no-compiling class=content section>
                                 <p>Yep, that's right. you can develop a React app without having to re-compile it every time you change your app. Isn't it nice? If you don't care about the hassle of re-compiling all the time, follow the instruction in the next section of this page.</p>
                             <p>To get that wonderful setup going, you need <code>npm</code>. You will <b>install create-react-app</b> by executing the following command (only necessary the first time you use this tool):</p>
 <pre>
@@ -58,7 +66,7 @@ npm start
 <pre>
 npm start &amp; disown
 </pre>
-                                <p>If you chose the later solution, you can actually find and kill the sborderederver by finding its process ID, but that might take a little extra effort (using commands like <code>ps ax | grep "react"</code> and <code>kill</code>).</p>
+                                <p>If you chose the later solution, you can actually find and kill the #settings ul lisborderederver by finding its process ID, but that might take a little extra effort (using commands like <code>ps ax | grep "react"</code> and <code>kill</code>).</p>
                                 <p>You're all set, now. <b>Write your project in the <code>/src</code>  folder of your app.</b></p>
                                 <p>When you are ready to build your app for release, type in the following command:</p>
 <pre>
@@ -76,7 +84,7 @@ npm run build
                             <div id=start-a-project class=title>
                                 <h2>Start a React Project That Necessitates Re-compiling</h2>
                             </div>
-                            <div id=start-a-project class=content>
+                            <div id=start-a-project class=content section>
                                 <p>To start a project in React, you need to do some setup. <code>npm</code> is the tool you want to use (make sure it is installed on your machine).</p>
                                 <p>Open a terminal and <code>cd</code> to the folder of your project (use <code>mkdir</code> if necessary). Enter the three following commands:</p>
 <pre>
@@ -166,11 +174,11 @@ npm run production
                             <div id=elements-components-jsx class=title>
                                 <h2>Elements, Components, and JSX</h2>
                             </div>
-                            <div id=elements-components-jsx class=content>
+                            <div id=elements-components-jsx class=content section>
                                 <div id=elements class=title>
                                     <h3>React Elements</h3>
                                 </div>
-                                <div id=elements class=content>
+                                <div id=elements class=content subsection>
                                     <p>Simply put, a React element describes what you want to see on the screen. Not so simply put, <b>a React element is an object representation of a DOM node</b>. It is important to note that a React element is not actually the thing you will see on your screen. Instead, it is just an object representation of it. In order to create our object representation of a DOM node (aka React element), we can use React’s <code>createElement</code> method.</p>
 <pre>
 // the createElement method
@@ -206,7 +214,7 @@ const element = React.createElement(
                                 <div id=components class=title>
                                     <h3>React Components</h3>
                                 </div>
-                                <div id=components class=content>
+                                <div id=components class=content subsection>
                                     <p>A component is <b>a function or a class</b> which optionally accepts input and <b>returns a React element</b>.</p>
 <pre>
 // a React component
@@ -228,13 +236,15 @@ const element = React.createElement(
     null
 )
 </pre>
+                                
                                 </div>
                                 <div id=jsx class=title>
                                     <h3>JSX</h3>
                                 </div>
-                                <div id=jsx class=content>
-                                    <p>You could write React elements and components like in the examples of the previous subsections and your app would work perfectly fine. However, there is a faster way to do it: JSX. The great advantage of this preprocessor layer is that <b>JSX allows you to write XML within your JavaScript code</b> (hence the name...). This is what makes React so interesting: It unites the content and the code that handles it.</p>
-                                    <p>Similarly, the new ES6 standards allows the code to be much less crowded. If you do not know about JavaScript standards, I suggest that you read the small subsection "ES5 vs ES6" below.</p>
+                                <div id=jsx class=content subsection>
+                                    <p>You could write React elements and components like in the examples of the previous subsections and your app would work perfectly fine. However, there is a faster way to do it: JSX.</p>
+                                    <p>The great advantage of this preprocessor layer is that <b>JSX allows you to write XML within your JavaScript code</b> (hence the name...). This is what makes React so interesting: It unites the content and the code that handles it.</p>
+                                    <p>Similarly, the new ES6 standards allows the code to be much less crowded. If you do not know about JavaScript standards, I suggest that you read the small subsection <a class=section-reference target=es6>ES5 vs ES6</a> below.</p>
                                     <p>When you write components with JSX, they will look something like this:</p>
 <pre>
 // import React module
@@ -348,10 +358,41 @@ class UserProfile extends React.Component {
 </pre>
                                     <p>In the code above, the <code>UserIcon</code>, "John Doe", and <code>UserEmailLink</code> will be displayed right in <code>UserNameAndAge</code> in the order they were sent down.</p>
                                     <p>A big question that you will face when writing React apps is: <b>How do you know what should be its own component?</b> One technique is to use the single responsibility principle. That is, <b>a component should ideally only do one thing</b>. If it ends up growing, it should be decomposed into smaller subcomponents.</p>
+
+                                </div>
+                    <!-- more about return -->
+                        <div id=return class=title>
+                            <h3>More about <code>return</code></h3>
+                        </div>
+                        <div id=return class=content subsection>
+                            <p>One of the best parts of React is that you can use the same intuition that you have about JavaScript functions for when and where you should create React components. However, instead of your function taking in some arguments and returning a value, your function is going to take in some arguments and return an object representation of your UI. This idea can be summed up in the following formula: fn(d) = V. <b>A function <i>fn</i> takes in some data <i>d</i> and returns a view <i>V</i></b>. This is a beautiful way to think about developing user interfaces because now your UI is just composed of different function invocations. This is how you’re already used to building applications and now you can take advantage of all of the benefits of function composition when building UIs.</p>
+                            <p>Another thing that is great about React is that you do not <i>have</i> to return typical “views” from your components. <b>As long as what eventually gets returned is either a React element, <code>null</code>, or <code>false</code>, you’re good.</b></p>
+                            <p>You can return other components</p>
+<pre>
+// returns another component
+render () {
+    return <b>&lt;MyOtherComponent/&gt;</b>
+}
+</pre>
+                             <p>You can return function invocations</p>
+<pre>
+// returns a function
+render () {
+    return <b>this.props.children(this.someImportantState)</b>
+}
+</pre>
+                             <p>Or, you can return nothing</p>
+<pre>
+// returns null
+render () {
+    return <b>null</b>
+}
+</pre>
+                    </div>
                                 <div id=es6 class=title>
                                     <h3>ES5 vs ES6</h3>
                                 </div>
-                                <div id=es6 class=content>
+                                <div id=es6 class=content subsection>
 Since the release of the ES6 version of the ECMAScript standards in 2015, <b>you can write your app based on either the old (ES5) or the new (ES6) JavaScript standards</b>. Notice the difference between ES5 and ES6 with the two versions of the same <code>Textbox</code> component below:</p>
 <pre>
 // a react component written in ES5
@@ -448,7 +489,6 @@ class Textbox extends React.Component {
                                                 </tr>
                                             </tbody>
                                         </table>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -458,42 +498,99 @@ class Textbox extends React.Component {
                         <div id=props-and-state class=title>
                             <h2>Props and State</h2>
                         </div>
-                        <div id=props-and-state class=content>
-                            <div id=props-vs-state class=title>
-                                <h3>Props vs State</h3>
+                        <div id=props-and-state class=content section>
+                            <div id=es6-warning class=pinned>
+                            Please make sure you read the <a class=section-reference target=es6>ES5 vs ES6</a> subsection before you continue.
                             </div>
-                            <div id=props-vs-state class=content>
-                            <p>There are two types of data in React: props and state. <b>Props are a way of passing immutable data from parent to child</b>. On the other hand, <b>state is reserved only for interactivity</b>, that is, data that changes over time. In other words, state are the properties of components that change. State can only be passed to children components as prop. As a consequence, <b>state become immutable when they are outside of the component they originate from</b>.</p>
-
-                            </div>
+                        <div id=props-vs-state class=title>
+                            <h3>Props vs State</h3>
+                        </div>
+                        <div id=props-vs-state class=content subsection>
+                            <p>There are two types of data in React: props and state. <b>Props are a way of passing immutable data from parent to child</b>. On the other hand, <b>state is reserved only for interactivity</b>, that is, data that changes over time. In other words, state is the set of properties of a component that changes.</p>
+                        </div>
                             <div id=how-to-initialize-state class=title>
-                                <h3>How To Initialize State</h3>
+                                <h3>How to Initialize State</h3>
                             </div>
-                            <div id=how-to-initialize-state class=content>
-                                <p><b>When state are changed within a component, they trigger a re-render of the particular component (and, if applicable, of its children).</b></p>
-                                <p>If you use ES6, you initialize state in a component with <code>constructor(props)</code>:
+                            <div id=how-to-initialize-state class=content subsection>
+                                <p>You initialize the state of a component with <code>constructor(props)</code> and access its value anywhere else in the component with <code>this.state</code>:
 <pre>
 class MyComponent extends React.Component {
     <b>constructor(props) {
         super(props)
-        this.state = { myState: "value"};
+        this.state = {someData: "value"}
     }</b>
     render() {
-        return &lt;div&gt;{this.state.myState}&lt;/div&gt;
+        return &lt;div&gt;{<b>this.state.someData</b>}&lt;/div&gt;
     }
 }
 </pre>
-                                <p></p>
+                                <p><b>When the state of a component changes, the component re-renders itself.</b></p>
+                            </div>
+                        <div id=passing-down-state class=title>
+                            <h3>Passing Parent State to Child Components</h3>
+                        </div>
+                            <div id=passing-down-state class=content subsection>
+                            <p>When you want to use the value of a component's state in the child components, <b>pass the parent state down as a prop</b>. In the <code>return</code> of the render method of <code>ParentComponent</code>, you wil have something like this: </p>
+<pre>
+&lt;ChildComponent <b>data={this.state.someData}</b> /&gt;
+</pre>
+                            <p><b>The state of the parent component becomes immutable in the child component</b> because it becomes a prop. In this case, the value of <code>someData</code> can be retrieved from the props of the child component at <code>this.props.data</code>. A state that is passed down in such a manner will make <b>child components re-render every time the state changes</b>.</p>
+                            <p>If you want to <b>pass down the parent state to the child components of the child component</b> (in other word, get another level deeper), you need to <b>remember that the parent state has already been changed to a prop</b> in the child component. Therefore, you are just passing another prop to these nested components:</p>
+<pre>
+&lt;NestedChildComponent data={<b>this.props.data</b>} /&gt;
+</pre>            
+                            <p>No matter how deep these components are, if the prop was initially a state in <code>ParentComponent</code>, they will also re-render if that state changes.</p>
+                        </div>
+                        <div id=modifying-parent-state class=title>
+                            <h3>Modifying Parent State from Child Components</h3>
+                        </div>
+                        <div id=modifying-parent-state class=content subsection>
+                            <p>You can not directly modify the state of the parent component in child components. To do so, <b>you must pass down a function defined in the parent component that will handle such a change</b> (usually, with a <code>this.setState()</code> statement in it). To make sure that such a function works properly, you will have to write code in this fashion:</p>
+<pre>
+class ChildComponent extends React.Component {
+    constructor(props) {
+        super(props)
+        this.changeParentStateFromChild = this.changeParentStateFromChild.bind(this)
+    }
+    <b>changeParentStateFromChild() {
+        this.props.changeStateInParent("this is the *new* data!!!")
+    }</b>
+    render() {
+        return (
+            &lt;span&gt;
+                someData: {this.props.data}
+                &lt;input type="button" value="Click Me!" <b>onClick={this.changeParentStateFromChild}</b> /&gt;
+            &lt;/span&gt;
+        )
+    }
+}
+
+class ParentComponent extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {someData: "this is the data"}
+        <b>this.changeStateInParent = this.changeStateInParent.bind(this)</b>
+    }
+    <b>changeState(newData) {
+        this.setState({someData: newData})
+    }</b>
+    render() {
+        return &lt;ChildComponent data={this.state.someData} <b>changeStateInParent={this.changeState}</b> /&gt;
+    }
+}
+</pre>Sending
+                            <p>The function passed down as a prop will have to be <b>triggered by an event</b> in the child component (such as <code>onClick</code> in the example). Otherwise, the user will not be able to modify the parent state from this component.</p>
+                            <p>Just like when you pass down a state to a nested child component, you can pass down the function with the <code>this.setState()</code> statement to deeper components. Even if the initial function is sent down 10 levels deep, <b>the event in the child component in question will modify the state of the component where the function originates from</b> (in this case, <code>ParentComponent</code>) and thus re-render all the components that receive the state as a prop.</p>
+
                             </div>
                             <div id=passing-shared-state class=title>
-                                <h3>Passing Shared State To Sibling Children</h3>
+                                <h3>Passing Shared State to Sibling Child Components</h3>
                             </div>
-                            <div id=passing-shared-state class=content>
-                                <p>If two components need to rely on the same state, they should be siblings. <b>The shared state needs to live and be modified in the parent component.</b> However, <b>the function that changes the state should be passed down to the children as a prop. Any change of the parent state will re-render dynamically the children component that received the state as a prop.</b></p>
-                                <p>Why? Because <b>you can not write functions that modify the parent state in the child component</b>. The state that belong to the parent component is <code>undefined</code> in the scope of the child component. If you pass the state as a prop in a function declared in the child component, it will not trigger a re-render.</p>
-                                <p>Here is an example on how to do this:</p>
+                            <div id=passing-shared-state class=content subsection>
+                                <p>If two components need to rely on the same state, they should probably be siblings. <b>The shared state needs to live and be modified in the parent component.</b></p>
+                                <p>In the example below, the sibling components <code>Counter</code> and <code>IncrementButton</code> rely on the state of <code>ParentComponent</code>. The former component shows the value of <code>counter</code> whereas the latter increments its value when the user clicks on the button.</p>
 <pre>
-// written in ES5
+// warning: written with ES5 standards
 // this component re-renders every time this.state.counter is changed in the parent component
 var Counter = React.createClass({
     render() {
@@ -517,7 +614,7 @@ var IncrementButton = React.createClass({
 })
 
 // the parent component
-var MyComponent = React.createClass({
+var ParentComponent = React.createClass({
     // the shared state lives here
     getInitialState() {
         return {<b>counter: 0</b>}
@@ -538,6 +635,7 @@ var MyComponent = React.createClass({
     }
 })
 </pre>
+                        <p>Since the components are siblings, the changes to <code>this.state.counter</code> triggered by <code>IncrementButton</code> are immediately reflected in the <code>Counter</code> component.</p>
                             </div>
                         </div>
                     </div>
@@ -547,9 +645,8 @@ var MyComponent = React.createClass({
                         <div id=keys class=title>
                             <h2>Keys</h2>
                         </div>
-                        <div id=keys class=content>
-                            <p>When you render a list of items, React always stores some info about each item in the list. <b>If you render a component that has state, that state needs to be stored</b> – and regardless of how you implement your components, React stores a reference to the backing native views.</p>
-                            <p>When you update that list, React needs to determine what has changed. You could've added, removed, rearranged, or updated items in the list.</p>
+                        <div id=keys class=content section>
+                            <p>If you want to render a list of items in React (let's say that you have a <code>List</code> and a <code>Item</code> component), you probably want to reuse the <code>Item</code> component for each item in your list. If the list is static, the good news is that React do not need you to identify the items in any particular way, because the list will never change. However, <b>if you want to generate a list dynamically, you will need to provide a <code>key</code> property that is different for each item so that React can compare the changes that need to be re-rendered on the page</b>.</p>
                             <p>Imagine transitioning from</p>
 <pre>
 &lt;!-- initial list --&gt; 
@@ -563,60 +660,60 @@ var MyComponent = React.createClass({
 &lt;li&gt;Claudia: 8 tasks left&lt;/li&gt;
 &lt;li&gt;Alexa: 5 tasks left&lt;/li&gt;
 </pre>
-                            <p>React is just a computer program and doesn't know what you intended it to do. As a result, <b>React asks you to specify a key property on each element in a list, a string to differentiate each component from its siblings</b>. In this case, <code>alexa</code>, <code>ben</code>, <code>claudia</code> might be sensible keys; if the items correspond to objects in a database, the database ID is usually a good choice:</p>
+                            <p>In this case, <code>alexa</code>, <code>ben</code>, <code>claudia</code> might be sensible keys. If the items correspond to objects in a database, the database ID field is usually a good choice:</p>
 <pre>
-// how to specify a key on an element
-&lt;li key={user.id}>{user.name}: {user.taskCount} tasks left</li>
+// example of how to specify a key in React
+&lt;Item <b>key={user.id}</b>>{user.name}: {user.taskCount} tasks left&lt;/Item&gt;
 </pre>
-                            <p><code>key</code> is a special property that's reserved by React. When an element is created, React pulls off the key property and stores the key directly on the returned element. Even though it may look like it is part of props, <b>it cannot be referenced with <code>this.props.key</code>.</b> React uses the key automatically while deciding which children to update; there is no way for a component to inquire about its own key.</p>
-                            <p>When a list is rerendered, React takes each element in the new version and looks for one with a matching key in the previous list. When a key is added to the set, a component is created; when a key is removed, a component is destroyed. Keys tell React about the identity of each component, so that it can maintain the state across rerenders. If you change the key of a component, it will be completely destroyed and recreated with a new state.</p>
-                            <p>If you don't specify any key, React will warn you and fall back to using the array index as a key – which is not the correct choice if you ever reorder elements in the list or add/remove items anywhere but the bottom of the list. Explicitly passing <code>key={i}</code> silences the warning but has the same problem so isn't recommended in most cases.</p>
-                            <p><b>Component keys don't need to be globally unique, only unique relative to the immediate siblings.</b></p>
+                            <p><code>key</code> is a special property that is reserved by React. When an element is created, React pulls off the <code>key</code> property and stores it directly on the returned element. Even though it may look like it is part of props, <b>it cannot be referenced with <code>this.props.key</code>.</b> React uses the key automatically while deciding which children to update; there is no way for a component to inquire about its own key.</p>
+                            <p><b>Component keys do not need to be globally unique, only unique relative to the immediate siblings.</b></p>
+                            <p>How does it work? Simple: when a list is re-rendered, React takes each element in the new version and looks for one with a matching key in the previous list. When a key is added to the set, a component is created; when a key is removed, a component is destroyed. Keys tell React about the identity of each component, so that it can maintain the state across re-renders. If you change the key of a component, it will be completely destroyed and recreated with a new state (which is not efficient).</p>
+                            <p><b>If you do not specify any key, React will warn you and fall back to using the array index as a key</b> – which is not the correct choice if you ever re-order elements in the list or add/remove items anywhere but the bottom of the list. Explicitly passing <code>key={i}</code> silences the warning but has the same problem so it is not recommended in most cases.</p>
                         </div>
                     </div>
 
-                    <!-- more about return -->
-                    <div id=return class=wrapper>
-                        <div id=return class=title>
-                            <h2>More About <code>Return</code></h2>
+                        <!-- refs -->
+                        <div id=refs class=wrapper>
+                            <div id=refs class=title>
+                                <h2>Refs</h2>
+                            </div>
+                            <div id=refs class=content section>
+                                <!-- subsection -->
+                                <div id=bbb class=title>
+                                    <h3>Not Yet Implemented</h3>
+                                </div>
+                                <div id=bbb class=content subsection>
+                                    <p>This section is empty for now. Come back later!</p>
+                                </div>
+                            </div>
                         </div>
-                        <div id=return class=content>
-                            <p>One of the best parts of React is that you can use the same intuition that you have about JavaScript functions for when and where you should create React components. However, instead of your function taking in some arguments and returning a value, your function is going to take in some arguments and return an object representation of your UI. This idea can be summed up in the following formula, fn(d) = V. <b>A Function takes in some Data and returns a View</b>. This is a beautiful way to think about developing user interfaces because now your UI is just composed of different function invocations. This is how you’re already used to building applications and now you can take advantage of all of the benefits of function composition when building UIs.</p>
-                            <p>Another thing that is great about React is that you do not <i>have</i> to return typical “views” from your components. <b>As long as what eventually gets returned is a React element, <code>null</code>, or <code>false</code>, you’re good.</b></p>
-                            <p>You can return other components</p>
-<pre>
-// returns another component
-render () {
-    return &lt;MyOtherComponent/&gt;
-}
-</pre>
-                             <p>You can return function invocations</p>
-<pre>
-// returns a state
-render () {
-    return this.props.children(this.someImportantState)
-}
-</pre>
-                             <p>Or, you can return nothing</p>
-<pre>
-// returns null
-render () {
-    return null
-}
-</pre>
+
+                        <!-- proptypes -->
+                        <div id=proptypes class=wrapper>
+                            <div id=proptypes class=title>
+                                <h2>PropTypes</h2>
+                            </div>
+                            <div id=proptypes class=content section>
+                                <!-- subsection -->
+                                <div id=aaa class=title>
+                                    <h3>Not Yet Implemented</h3>
+                                </div>
+                                <div id=aaa class=content subsection>
+                                    <p>This section is empty for now. Come back later!</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
                         <!-- destructuring data -->
                         <div id=destructuring-data class=wrapper>
                             <div id=destructuring-data class=title>
                                 <h2>Destructuring Data</h2>
                             </div>
-                            <div id=destructuring-data class=content>
+                            <div id=destructuring-data class=content section>
                                 <div id=destructuring-principle class=title>
                                     <h3>The Principle</h3>
                                 </div>
-                                <div id=destructuring-principle class=content>
+                                <div id=destructuring-principle class=content subsection>
                                     <p>Here is how to <b>destructure an array</b>:</p>
 <pre>
 // an array
@@ -656,7 +753,7 @@ console.log(currentLocation) // New York
                                 <div id=destructuring-inherited-props class=title>
                                     <h3>Destructuring Inherited Props in React</h3>
                                 </div>
-                                <div id=destructuring-inherited-props class=content>
+                                <div id=destructuring-inherited-props class=content subsection>
                                     <p>Destructuring makes the use of inherited props in the child component easier. Instead of having to use <code>this.props.<i>my_prop</i></code> or individually assign each prop to a variable with <code>var <i>my_prop</i> = this.props.<i>my_prop</i></code>, you can simply use <code><i>my_prop</i></code> if you have destructured <code>this.props</code> before. See the example below:</p>
 <pre>
 // child component
@@ -686,7 +783,7 @@ var Parent = React.createClass({
                                 <div id=sending-destructured-props class=title>
                                     <h3>Sending Props as Objects in React</h3>
                                 </div>
-                                <div id=sending-destructured-props class=content>
+                                <div id=sending-destructured-props class=content subsection>
                                     <p>Even better, <b>you can also send objects as props, have the child destrcture the object (taking only the props it needs within the object), and send all the props to another component.</b> See this example:</p>
 <pre>
 var NestedChild = React.createClass({
@@ -746,7 +843,7 @@ var Parent = React.createClass({
         /* jQuery */
             // debug
             var debug = false
-            var expand_section = ["props-and-state"] // enter the sections that you want to keep expanded (section only, no subsections)
+            var expand_section = ["proptypes"] // enter the sections that you want to keep expanded (section only, no subsections)
             // init
             $(document).ready(function(){
                 // welcome message
@@ -784,10 +881,65 @@ var Parent = React.createClass({
                 })
             })
 
-            // opens section on click
+            // collapses all sections when clicks outside of sections/subsections
+            $('body').click(function(event) {
+                // only when specifically clicking on the body (not its children)
+                if (event.target.nodeName === "BODY") {
+                    // collapse all sections and subsections
+                    $(".content").slideUp()
+                    // changes the status and text of the settings
+                    $('#toggle-sections').attr('collapsed',true)
+                    $('#toggle-sections').text("Expand Sections")
+                    $('#toggle-subsections').attr('collapsed',true)
+                    $('#toggle-subsections').text("Expand Subsections")
+                }
+            })
+
+            // expand parent sections
+            $('#toggle-sections').click(function() {
+                // checks if collapsed is true or false
+                var status = $(this).attr('collapsed') === "true" ? true : false
+                // toggles the value of collapsed
+                $(this).attr('collapsed',!status)
+                // modifies text depending on status
+                var action = !status ? "Expand" : "Collapse"
+                $(this).text(action + " Sections")
+                // toggle expanded/collapsed
+                status ? $(".content[section='']").slideDown() : $(".content[section='']").slideUp()
+            })
+
+            // expand subsections
+            $('#toggle-subsections').click(function() {
+                // checks if collapsed is true or false
+                var status = $(this).attr('collapsed') === "true" ? true : false
+                // toggles the value of collapsed
+                $(this).attr('collapsed',!status)
+                // modifies text depending on status
+                var action = !status ? "Expand" : "Collapse"
+                $(this).text(action + " Subsections")
+                // toggle expanded/collapsed
+                status ? $(".content[subsection='']").slideDown() : $(".content[subsection='']").slideUp()
+            })
+
+            // opens section/subsection on click
             $(".title").click(function(){
                 $(".content#" + $(this).attr('id')).slideToggle()
                 console.log("Toggle slide of #" + $(this).attr('id'))
+            })
+
+            // expands a targeted subsection (and its parent section if necessary) and scrolls the window it
+            $(".section-reference").click(function(){
+                // get target
+                var target = $(this).attr('target')
+                // get the parent section of the targeted subsection
+                var parent = $("#" + target).parent().parent().attr('id')
+                // get the origin of the reference
+                // var origin = $(this).parent().parent().attr('id')
+                // opens up the parent section and the targeted subsection
+                $(".content#" + parent).slideDown()
+                $(".content#" + target).slideDown()
+                // scrolls to the targeted subsection
+                $('body').animate({scrollTop: $("#" + target).offset().top},'slow')
             })
         </script>
     </body>
